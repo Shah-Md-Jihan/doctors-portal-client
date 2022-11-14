@@ -1,5 +1,6 @@
 import React from "react";
 import treatment from "../../../assets/images/treatment.png";
+import PrimaryButton from "./../../../components/PrimaryButton";
 
 const ExternalCare = () => {
   return (
@@ -13,7 +14,7 @@ const ExternalCare = () => {
             using Lorem Ipsumis that it has a more-or-less normal distribution of letters,as opposed to using 'Content here, content here', making it
             look like readable English. Many desktop publishing packages and web page
           </p>
-          <button className="btn btn-primary text-white">Get Started</button>
+          <PrimaryButton>Get Started</PrimaryButton>
         </div>
       </div>
     </div>
