@@ -11,7 +11,7 @@ const BusinessCards = () => {
       name: "Opening Hours",
       description: "10 am to 5 pm & 24 hour Emergency service",
       icon: clock,
-      bgClass: "bg-primary",
+      bgClass: "bg-gradient-to-r from-primary to-secondary",
     },
     {
       id: 2,
@@ -25,7 +25,7 @@ const BusinessCards = () => {
       name: "Contact Us",
       description: "+880 1919689515",
       icon: phone,
-      bgClass: "bg-primary",
+      bgClass: "bg-gradient-to-r from-primary to-secondary",
     },
   ];
   return (
