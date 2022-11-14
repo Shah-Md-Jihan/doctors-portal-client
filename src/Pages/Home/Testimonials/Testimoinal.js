@@ -9,7 +9,7 @@ const Testimoinal = ({ testimonial }) => {
       </div>
       <div className="card card-side">
         <figure>
-          <img src={img} alt="Movie" />
+          <img src={img} className="w-16" alt="Movie" />
         </figure>
         <div className="card-body">
           <h2 className="card-title">{name}</h2>
