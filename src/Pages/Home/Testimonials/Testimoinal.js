@@ -3,7 +3,7 @@ import React from "react";
 const Testimoinal = ({ testimonial }) => {
   const { name, img, address, comment } = testimonial;
   return (
-    <div className="mt-36 px-10">
+    <div className="mt-36 px- shadow-lg">
       <div>
         <p className="mb-9">{comment}</p>
       </div>

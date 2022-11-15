@@ -43,7 +43,7 @@ const Testimonials = () => {
           <img src={quote} alt="quote" className="w-100" />
         </div>
       </div>
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-14">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-14 px-10">
         {testimonialData.map((testimonial) => (
           <Testimoinal key={testimonial.id} testimonial={testimonial}></Testimoinal>
         ))}
