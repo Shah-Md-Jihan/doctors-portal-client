@@ -23,6 +23,11 @@ const Navbar = () => {
       <li>
         <Link to="/contact">Contact Us</Link>
       </li>
+      {user?.uid && (
+        <li>
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
+      )}
       <li>{user?.uid ? <button onClick={handleLogOut}>Sign Out</button> : <Link to="/login">Login</Link>}</li>
     </React.Fragment>
   );
