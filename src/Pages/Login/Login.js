@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const Login = () => {
   const {
@@ -9,14 +10,25 @@ const Login = () => {
     handleSubmit,
   } = useForm();
 
+  const { login } = useContext(AuthContext);
+  const [loginError, setLoginError] = useState("");
+
   const handleLogin = (data) => {
-    console.log(data);
+    login(data.email, data.password)
+      .then((user) => {
+        console.log(user);
+        setLoginError("");
+      })
+      .catch((error) => {
+        setLoginError(error.message);
+      });
   };
 
   return (
     <div className="flex justify-center items-center">
       <div className="w-[385px] h-[800px] p-6">
         <h1 className="text-xl font-semibold text-center">Login</h1>
+        {loginError && <p className="text-red-600">{loginError}</p>}
         <form onSubmit={handleSubmit(handleLogin)}>
           <div className="form-control w-full">
             <label className="label">
@@ -37,7 +49,6 @@ const Login = () => {
               type="password"
               {...register("password", {
                 required: "Password field is required",
-                minLength: { value: 6, message: "Password must be 6 character or longer!" },
               })}
               className="input input-bordered w-full"
             />
