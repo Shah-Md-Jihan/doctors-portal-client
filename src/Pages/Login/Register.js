@@ -1,15 +1,20 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const Register = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const { user, createUser, updateUser } = useContext(AuthContext);
+  const { user, createUser, updateUser, googleLogin } = useContext(AuthContext);
+  const googleProviderInSignUpPage = new GoogleAuthProvider();
 
   const handleSignUp = (info) => {
     createUser(info.email, info.password)
@@ -21,10 +26,20 @@ const Register = () => {
         updateUser(userInfo)
           .then(() => {
             console.log(user);
+            navigate(from, { replace: true });
           })
           .catch((error) => console.error(error));
       })
       .catch((error) => console.error(error));
+  };
+
+  const handleGoogleLoginInSignUpPage = () => {
+    googleLogin(googleProviderInSignUpPage)
+      .then((user) => {
+        console.log(user);
+        navigate(from, { replace: true });
+      })
+      .catch((error) => console.log(error));
   };
   return (
     <div className="flex justify-center items-center">
@@ -90,7 +105,9 @@ const Register = () => {
             </Link>
           </p>
           <div className="divider">OR</div>
-          <button className="btn btn-outline">CONTINUE WITH GOOGLE</button>
+          <button onClick={handleGoogleLoginInSignUpPage} className="btn btn-outline">
+            CONTINUE WITH GOOGLE
+          </button>
         </div>
       </div>
     </div>

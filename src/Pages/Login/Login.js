@@ -1,3 +1,4 @@
+import { GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -7,13 +8,14 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
+  const googleProvider = new GoogleAuthProvider();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
-  const { login } = useContext(AuthContext);
+  const { login, googleLogin } = useContext(AuthContext);
   const [loginError, setLoginError] = useState("");
 
   const handleLogin = (data) => {
@@ -26,6 +28,16 @@ const Login = () => {
       .catch((error) => {
         setLoginError(error.message);
       });
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogin(googleProvider)
+      .then((user) => {
+        console.log(user);
+        navigate(from, { replace: true });
+        setLoginError("");
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -77,7 +89,9 @@ const Login = () => {
             </Link>
           </p>
           <div className="divider">OR</div>
-          <button className="btn btn-outline">CONTINUE WITH GOOGLE</button>
+          <button onClick={handleGoogleLogin} className="btn btn-outline">
+            CONTINUE WITH GOOGLE
+          </button>
         </div>
       </div>
     </div>
