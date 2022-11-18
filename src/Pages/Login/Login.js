@@ -36,7 +36,6 @@ const Login = () => {
   const handleGoogleLogin = () => {
     googleLogin(googleProvider)
       .then((user) => {
-        console.log(user);
         handleLoginAlert();
         navigate(from, { replace: true });
         setLoginError("");
