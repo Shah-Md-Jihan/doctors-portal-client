@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { format } from "date-fns";
+import { AuthContext } from "../../contexts/AuthProvider";
 
-const BookingModal = ({ bookedAppointment, selectedDate, setBookedAppointment }) => {
+const BookingModal = ({ bookedAppointment, selectedDate, setBookedAppointment, notify, refetch, alreadyBook }) => {
+  const { user } = useContext(AuthContext);
+
   const { name, slots } = bookedAppointment;
   const handleBooking = (e) => {
     e.preventDefault();
@@ -19,8 +22,24 @@ const BookingModal = ({ bookedAppointment, selectedDate, setBookedAppointment })
       email,
       phone,
     };
-    console.log(bookingInfo);
-    setBookedAppointment(null);
+    // console.log(bookingInfo);
+    fetch("http://127.0.0.1:5000/booking", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(bookingInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          setBookedAppointment(null);
+          notify();
+          refetch();
+        } else {
+          alreadyBook(data.message);
+        }
+      });
   };
   const date = format(selectedDate, "PP");
   return (
@@ -39,8 +58,22 @@ const BookingModal = ({ bookedAppointment, selectedDate, setBookedAppointment })
                 <option key={i}>{slot}</option>
               ))}
             </select>
-            <input name="name" type="text" placeholder="Type your name" className="input input-bordered w-full" />
-            <input name="email" type="email" placeholder="Type your name" className="input input-bordered w-full" />
+            <input
+              name="name"
+              type="text"
+              defaultValue={user?.displayName}
+              disabled
+              placeholder="Type your name"
+              className="input input-bordered w-full"
+            />
+            <input
+              name="email"
+              type="email"
+              defaultValue={user?.email}
+              disabled
+              placeholder="Type your name"
+              className="input input-bordered w-full"
+            />
             <input name="phone" type="number" placeholder="Type your phone number" className="input input-bordered w-full" />
             <input type="submit" value="SUBMIT" className="bg-accent input  w-full" />
           </form>

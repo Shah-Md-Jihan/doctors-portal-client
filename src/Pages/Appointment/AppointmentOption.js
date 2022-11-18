@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const AppointmentOption = ({ appointmentOption, setBookedAppointment }) => {
+  const { user } = useContext(AuthContext);
   const { name, slots } = appointmentOption;
   return (
     <div className="card shadow-xl">
@@ -13,13 +15,14 @@ const AppointmentOption = ({ appointmentOption, setBookedAppointment }) => {
         <div className="card-actions justify-center mt-4">
           <label
             htmlFor="book-appointment"
-            disabled={slots.length === 0}
+            disabled={slots.length === 0 || !user?.uid}
             onClick={() => setBookedAppointment(appointmentOption)}
             className="btn btn-secondary"
           >
             Book Appointment
           </label>
         </div>
+        {!user?.uid && <span className="text-red-500">Login to Book</span>}
       </div>
     </div>
   );

@@ -3,8 +3,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { GoogleAuthProvider } from "firebase/auth";
+import { toast } from "react-toastify";
 
 const Register = () => {
+  const handleSingUpAlert = () => toast.success("Successfully Sign In!");
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
@@ -25,7 +27,7 @@ const Register = () => {
         };
         updateUser(userInfo)
           .then(() => {
-            console.log(user);
+            handleSingUpAlert();
             navigate(from, { replace: true });
           })
           .catch((error) => console.error(error));
@@ -36,11 +38,12 @@ const Register = () => {
   const handleGoogleLoginInSignUpPage = () => {
     googleLogin(googleProviderInSignUpPage)
       .then((user) => {
-        console.log(user);
+        handleSingUpAlert();
         navigate(from, { replace: true });
       })
       .catch((error) => console.log(error));
   };
+
   return (
     <div className="flex justify-center items-center">
       <div className="w-[385px] h-[800px] p-6">

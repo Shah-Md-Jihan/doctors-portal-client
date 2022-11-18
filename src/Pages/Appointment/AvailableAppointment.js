@@ -4,14 +4,26 @@ import AppointmentOption from "./AppointmentOption";
 import BookingModal from "./BookingModal";
 import { useQuery } from "@tanstack/react-query";
 
+import Loading from "../Shared/Loading/Loading";
+import { toast } from "react-toastify";
+
 const AvailableAppointment = ({ selectedDate }) => {
   const [bookedAppointment, setBookedAppointment] = useState(null);
-
-  const { data: appointmentOptions = [] } = useQuery({
-    queryKey: ["appointmentOptions"],
-    queryFn: () => fetch("http://127.0.0.1:5000/appointmentOptions").then((res) => res.json()),
+  const date = format(selectedDate, "PP");
+  const {
+    data: appointmentOptions = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["appointmentOptions", date],
+    queryFn: () => fetch(`http://127.0.0.1:5000/appointmentOptions?date=${date}`).then((res) => res.json()),
   });
 
+  const notify = () => toast.success("We accept your booking!");
+  const alreadyBook = (message) => toast.error(message);
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
   return (
     <div>
       <p className="text-center text-secondary font-bold mt-4">Available Appointments on {format(selectedDate, "PP")}</p>
@@ -22,7 +34,14 @@ const AvailableAppointment = ({ selectedDate }) => {
         ))}
       </div>
       {bookedAppointment && (
-        <BookingModal bookedAppointment={bookedAppointment} selectedDate={selectedDate} setBookedAppointment={setBookedAppointment}></BookingModal>
+        <BookingModal
+          bookedAppointment={bookedAppointment}
+          selectedDate={selectedDate}
+          setBookedAppointment={setBookedAppointment}
+          notify={notify}
+          refetch={refetch}
+          alreadyBook={alreadyBook}
+        ></BookingModal>
       )}
     </div>
   );
