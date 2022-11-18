@@ -21,14 +21,13 @@ const Register = () => {
   const handleSignUp = (info) => {
     createUser(info.email, info.password)
       .then((user) => {
-        console.log(user);
         const userInfo = {
           displayName: info.name,
         };
         updateUser(userInfo)
           .then(() => {
             handleSingUpAlert();
-            navigate(from, { replace: true });
+            saveUserInDB(info.name, info.email);
           })
           .catch((error) => console.error(error));
       })
@@ -42,6 +41,23 @@ const Register = () => {
         navigate(from, { replace: true });
       })
       .catch((error) => console.log(error));
+  };
+
+  // user data save in db
+  const saveUserInDB = (name, email) => {
+    const usersData = { name, email };
+    fetch("http://127.0.0.1:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(usersData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        navigate(from, { replace: true });
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
