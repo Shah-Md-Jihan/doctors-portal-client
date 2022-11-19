@@ -1,13 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { GoogleAuthProvider } from "firebase/auth";
 import { toast } from "react-toastify";
+import useToken from "../../hooks/useToken";
 
 const Register = () => {
   const handleSingUpAlert = () => toast.success("Successfully Sign In!");
   const location = useLocation();
+  const [createdUserEmail, setCreatedUserEmail] = useState("");
+  const [token] = useToken(createdUserEmail);
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
   const {
@@ -17,6 +20,10 @@ const Register = () => {
   } = useForm();
   const { user, createUser, updateUser, googleLogin } = useContext(AuthContext);
   const googleProviderInSignUpPage = new GoogleAuthProvider();
+
+  if (token) {
+    navigate(from, { replace: true });
+  }
 
   const handleSignUp = (info) => {
     createUser(info.email, info.password)
@@ -55,10 +62,22 @@ const Register = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        navigate(from, { replace: true });
+        // getUserToken(email);
+        setCreatedUserEmail(email);
       })
       .catch((error) => console.error(error));
   };
+
+  // const getUserToken = (email) => {
+  //   fetch(`http://127.0.0.1:5000/jwt?email=${email}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (data.accessToken) {
+  //         localStorage.setItem("accessToken", data.accessToken);
+
+  //       }
+  //     });
+  // };
 
   return (
     <div className="flex justify-center items-center">
