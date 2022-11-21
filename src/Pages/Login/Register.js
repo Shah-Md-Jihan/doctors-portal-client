@@ -68,17 +68,6 @@ const Register = () => {
       .catch((error) => console.error(error));
   };
 
-  // const getUserToken = (email) => {
-  //   fetch(`http://127.0.0.1:5000/jwt?email=${email}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data.accessToken) {
-  //         localStorage.setItem("accessToken", data.accessToken);
-
-  //       }
-  //     });
-  // };
-
   return (
     <div className="flex justify-center items-center">
       <div className="w-[385px] h-[800px] p-6">
