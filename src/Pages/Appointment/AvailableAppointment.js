@@ -16,7 +16,7 @@ const AvailableAppointment = ({ selectedDate }) => {
     isLoading,
   } = useQuery({
     queryKey: ["appointmentOptions", date],
-    queryFn: () => fetch(`http://127.0.0.1:5000/appointmentOptions?date=${date}`).then((res) => res.json()),
+    queryFn: () => fetch(`https://doctors-portal-server-three-rosy.vercel.app/appointmentOptions?date=${date}`).then((res) => res.json()),
   });
 
   const notify = () => toast.success("We accept your booking!");

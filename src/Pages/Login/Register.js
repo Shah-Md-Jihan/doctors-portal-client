@@ -53,7 +53,7 @@ const Register = () => {
   // user data save in db
   const saveUserInDB = (name, email) => {
     const usersData = { name, email };
-    fetch("http://127.0.0.1:5000/users", {
+    fetch("https://doctors-portal-server-three-rosy.vercel.app/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",

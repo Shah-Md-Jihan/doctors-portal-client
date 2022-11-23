@@ -78,12 +78,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/payment/:id",
-        element: (
-          <AdminRoute>
-            <Payment></Payment>
-          </AdminRoute>
-        ),
-        loader: ({ params }) => fetch(`http://127.0.0.1:5000/booking/${params.id}`),
+        element: <Payment></Payment>,
+        loader: ({ params }) => fetch(`https://doctors-portal-server-three-rosy.vercel.app/booking/${params.id}`),
       },
     ],
   },

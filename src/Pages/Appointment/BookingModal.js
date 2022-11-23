@@ -24,7 +24,7 @@ const BookingModal = ({ bookedAppointment, selectedDate, setBookedAppointment, n
       phone,
     };
     // console.log(bookingInfo);
-    fetch("http://127.0.0.1:5000/booking", {
+    fetch("https://doctors-portal-server-three-rosy.vercel.app/booking", {
       method: "POST",
       headers: {
         "content-type": "application/json",

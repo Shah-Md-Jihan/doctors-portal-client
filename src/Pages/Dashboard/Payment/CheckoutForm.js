@@ -13,7 +13,7 @@ const CheckoutForm = ({ bookingData }) => {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("http://127.0.0.1:5000/create-payment-intent", {
+    fetch("https://doctors-portal-server-three-rosy.vercel.app/create-payment-intent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const CheckoutForm = ({ bookingData }) => {
         email,
         bookingId: _id,
       };
-      fetch("http://127.0.0.1:5000/payments", {
+      fetch("https://doctors-portal-server-three-rosy.vercel.app/payments", {
         method: "POST",
         headers: {
           "content-type": "application/json",
