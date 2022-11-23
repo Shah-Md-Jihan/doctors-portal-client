@@ -3,7 +3,7 @@ import { AuthContext } from "../../contexts/AuthProvider";
 
 const AppointmentOption = ({ appointmentOption, setBookedAppointment }) => {
   const { user } = useContext(AuthContext);
-  const { name, slots } = appointmentOption;
+  const { name, slots, price } = appointmentOption;
   return (
     <div className="card shadow-xl">
       <div className="card-body text-white text-center">
@@ -12,6 +12,7 @@ const AppointmentOption = ({ appointmentOption, setBookedAppointment }) => {
         <p>
           {slots.length} {slots.length > 1 ? "SPACES" : "SPACE"} AVAILABLE
         </p>
+        <p className="text-2xl text-yellow-400">Consultancy Fee: ${price}</p>
         <div className="card-actions justify-center mt-4">
           <label
             htmlFor="book-appointment"

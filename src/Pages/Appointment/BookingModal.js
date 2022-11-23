@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/AuthProvider";
 const BookingModal = ({ bookedAppointment, selectedDate, setBookedAppointment, notify, refetch, alreadyBook }) => {
   const { user } = useContext(AuthContext);
 
-  const { name, slots } = bookedAppointment;
+  const { name, slots, price } = bookedAppointment;
   const handleBooking = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -17,6 +17,7 @@ const BookingModal = ({ bookedAppointment, selectedDate, setBookedAppointment, n
     const bookingInfo = {
       date,
       slot,
+      price,
       patient,
       treatment: name,
       email,
